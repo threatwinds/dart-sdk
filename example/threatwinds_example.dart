@@ -1,4 +1,4 @@
-import 'package:threatwinds/threatwinds.dart';
+import 'package:threatwinds_sdk/threatwinds_sdk.dart';
 
 void main() {
   var client = Client(hostname: "intelligence.threatwinds.com");

@@ -1,4 +1,4 @@
-library threatwinds.requests;
+library threatwinds_sdk.requests;
 
 import 'threatwinds_client.dart';
 import 'dart:convert';

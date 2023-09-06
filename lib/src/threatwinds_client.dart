@@ -1,4 +1,4 @@
-library threatwinds.base;
+library threatwinds_sdk.base;
 
 class Client {
   String hostname;

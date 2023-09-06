@@ -1,4 +1,4 @@
-name: threatwinds
+name: threatwinds_sdk
 description: ThreatWinds SDK for Dark
 version: 1.0.0-dev
 repository: https://github.com/threatwinds/dart-sdk
