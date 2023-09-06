@@ -1,0 +1,13 @@
+name: threatwinds
+description: ThreatWinds SDK for Dark
+version: 1.0.0
+repository: https://github.com/threatwinds/dart-sdk
+
+environment:
+  sdk: ^3.1.0
+
+dev_dependencies:
+  lints: ^2.0.0
+  test: ^1.21.0
+dependencies:
+  http: ^1.1.0
