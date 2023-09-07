@@ -18,7 +18,7 @@ class Request {
       this.params,
       this.headers});
 
-  Future<respObject?> doReq<respObject>({required Client cli}) async {
+  Future<respObject> doReq<respObject>({required Client cli}) async {
     http.Response resp;
 
     if (cli.authorization != null) {
@@ -83,7 +83,7 @@ class Request {
     if (resp.statusCode == 200 || resp.statusCode == 202) {
       return jsonDecode(resp.body) as respObject;
     } else if (resp.statusCode == 204) {
-      return null;
+      throw Exception("empty response: ${resp.body}");
     } else {
       throw Exception("unexpected response: ${resp.body}");
     }
