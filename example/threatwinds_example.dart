@@ -1,14 +1,22 @@
 import 'package:threatwinds_sdk/threatwinds_sdk.dart';
 
 void main() {
-  var client = Client(hostname: "intelligence.threatwinds.com");
-  var request = Request(
-      endpoint: "/api/search/v1/entities",
-      method: "POST",
-      query:
-          '{"aggs":{"top-malware-types":{"terms":{"field":"attributes.malware-type.keyword","size":50}},"accuracy-stats":{"stats":{"field":"accuracy"}}},"query":{"filter":[{"term":{"type":{"value":"malware"}}}]},"source":{"excludes":["attributes.malware-family"],"includes":["attributes"]}}');
+  final client = Client(hostname: "intelligence.threatwinds.com");
 
-  var resp = request.doReq<Map<String, dynamic>>(cli: client);
-  print("waiting for values...");
+  Map<String, String> params = {
+    "limit": "1",
+  };
+
+  const query =
+      '{"aggs":{"byTypes":{"terms":{"field":"type.keyword"}}},"query":{"must":[{"terms":{"type.keyword":["domain","hostname","url","ip","malware","sha1","sha224","sha256","sha384","sha512","sha512-224","sha512-256","sha3-224","sha3-256","sha3-384","sha3-512","authentihash","cdhash","md5"]}}]},"source":{"excludes":["*"]}}';
+
+  final req = Request(
+      method: "POST",
+      endpoint: "/api/search/v1/entities",
+      query: query,
+      params: params);
+
+  final resp = req.doReq<Map<String, dynamic>>(cli: client);
+
   resp.then((value) => print(value));
 }
