@@ -19,16 +19,6 @@ class Request {
       this.headers});
 
   Future<respObject> doReq<respObject>({required Client cli}) async {
-    const htmlEscapeMode = HtmlEscapeMode(
-      name: 'custom',
-      escapeLtGt: false,
-      escapeQuot: false,
-      escapeApos: true,
-      escapeSlash: false,
-    );
-
-    const HtmlEscape htmlEscape = HtmlEscape(htmlEscapeMode);
-
     http.Response resp;
 
     if (cli.authorization != null) {
@@ -93,9 +83,9 @@ class Request {
     if (resp.statusCode == 200 || resp.statusCode == 202) {
       return jsonDecode(resp.body) as respObject;
     } else if (resp.statusCode == 204) {
-      throw Exception('empty response: ${htmlEscape.convert(resp.body)}');
+      throw Exception('empty response: ${resp.body}');
     } else {
-      throw Exception('unexpected response: ${htmlEscape.convert(resp.body)}');
+      throw Exception('unexpected response: ${resp.body}');
     }
   }
 }
