@@ -21,10 +21,10 @@ class Request {
   Future<respObject> doReq<respObject>({required Client cli}) async {
     const htmlEscapeMode = HtmlEscapeMode(
       name: 'custom',
-      escapeLtGt: true,
-      escapeQuot: true,
+      escapeLtGt: false,
+      escapeQuot: false,
       escapeApos: true,
-      escapeSlash: true,
+      escapeSlash: false,
     );
 
     const HtmlEscape htmlEscape = HtmlEscape(htmlEscapeMode);
