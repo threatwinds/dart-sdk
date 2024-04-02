@@ -1,4 +1,6 @@
 library;
 
-export 'src/threatwinds_client.dart';
-export 'src/threatwinds_requests.dart';
+export 'src/client.dart';
+export 'src/requests.dart';
+export 'src/details.dart';
+export 'src/search_results.dart';
