@@ -76,8 +76,8 @@ class EntityObject {
   final int worstReputation;
   final int accuracy;
   final Map<String, dynamic> attributes;
-  final List<String> tags;
-  final List<String> visibleBy;
+  final List<String>? tags;
+  final List<String>? visibleBy;
 
   EntityObject(
       {required this.id,
@@ -89,8 +89,8 @@ class EntityObject {
       required this.worstReputation,
       required this.accuracy,
       required this.attributes,
-      required this.tags,
-      required this.visibleBy});
+      this.tags,
+      this.visibleBy});
 
   factory EntityObject.fromJson(Map<String, dynamic> json) =>
       _$EntityObjectFromJson(json);
@@ -107,7 +107,7 @@ class EntityHistoryObject {
   final String type;
   final String userID;
   final int reputation;
-  final Map<String, dynamic>? attributes;
+  final Map<String, dynamic> attributes;
   final List<String>? tags;
   final List<String>? visibleBy;
 
@@ -118,7 +118,7 @@ class EntityHistoryObject {
       required this.type,
       required this.userID,
       required this.reputation,
-      this.attributes,
+      required this.attributes,
       this.tags,
       this.visibleBy});
 

@@ -72,9 +72,10 @@ EntityObject _$EntityObjectFromJson(Map<String, dynamic> json) => EntityObject(
       worstReputation: json['worstReputation'] as int,
       accuracy: json['accuracy'] as int,
       attributes: json['attributes'] as Map<String, dynamic>,
-      tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-      visibleBy:
-          (json['visibleBy'] as List<dynamic>).map((e) => e as String).toList(),
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      visibleBy: (json['visibleBy'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$EntityObjectToJson(EntityObject instance) =>
@@ -100,7 +101,7 @@ EntityHistoryObject _$EntityHistoryObjectFromJson(Map<String, dynamic> json) =>
       type: json['type'] as String,
       userID: json['userID'] as String,
       reputation: json['reputation'] as int,
-      attributes: json['attributes'] as Map<String, dynamic>?,
+      attributes: json['attributes'] as Map<String, dynamic>,
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
       visibleBy: (json['visibleBy'] as List<dynamic>?)
           ?.map((e) => e as String)
