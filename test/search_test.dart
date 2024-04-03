@@ -24,8 +24,7 @@ void main() {
       expect(resp, completes);
 
       resp.then((body) {
-        EntityResults result = EntityResults();
-        result.fromJson(body);
+        EntityResults result = EntityResults.fromJson(body);
         print(result);
       });
     });
@@ -51,8 +50,7 @@ void main() {
       expect(resp, completes);
 
       resp.then((body) {
-        EntityHistoryResults result = EntityHistoryResults();
-        result.fromJson(body);
+        EntityHistoryResults result = EntityHistoryResults.fromJson(body);
         print(result);
       });
     });
