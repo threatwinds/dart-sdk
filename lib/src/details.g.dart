@@ -50,7 +50,7 @@ Attributes _$AttributesFromJson(Map<String, dynamic> json) => Attributes(
       label: json['label'] as String,
       value: json['value'],
       description: json['description'] as String,
-      tags: json['tags'] as List<dynamic>,
+      tags: json['tags'] as List<dynamic>?,
     );
 
 Map<String, dynamic> _$AttributesToJson(Attributes instance) =>
@@ -89,7 +89,7 @@ Association _$AssociationFromJson(Map<String, dynamic> json) => Association(
       label: json['label'] as String,
       value: json['value'],
       description: json['description'] as String,
-      tags: json['tags'] as List<dynamic>,
+      tags: json['tags'] as List<dynamic>?,
       bgCount: json['bgCount'] as int?,
       count: json['count'] as int?,
       significanceScore: (json['significanceScore'] as num?)?.toDouble(),

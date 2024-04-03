@@ -51,7 +51,7 @@ class Attributes {
   final String label;
   final dynamic value;
   final String description;
-  List<dynamic> tags;
+  final List<dynamic>? tags;
 
   Attributes(
       {required this.firstSeen,
@@ -69,7 +69,7 @@ class Attributes {
       required this.label,
       required this.value,
       required this.description,
-      required this.tags});
+      this.tags});
 
   factory Attributes.fromJson(Map<String, dynamic> json) =>
       _$AttributesFromJson(json);
@@ -102,10 +102,10 @@ class Association {
   final String label;
   final dynamic value;
   final String description;
-  List<dynamic> tags;
-  int? bgCount;
-  int? count;
-  double? significanceScore;
+  final List<dynamic>? tags;
+  final int? bgCount;
+  final int? count;
+  final double? significanceScore;
 
   Association({
     required this.firstSeen,
@@ -123,7 +123,7 @@ class Association {
     required this.label,
     required this.value,
     required this.description,
-    required this.tags,
+    this.tags,
     this.bgCount,
     this.count,
     this.significanceScore,
