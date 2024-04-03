@@ -193,17 +193,16 @@ class RelationObject implements Json {
   List<String>? visibleBy;
 
   @override
-  fromJson(dynamic object) {
-    Map<String, dynamic> tmp = jsonDecode(object);
-    id = tmp['id'];
-    timestamp = tmp['@timestamp'];
-    lastSeen = tmp['lastSeen'];
-    entityID = tmp['entityID'];
-    relatedEntityID = tmp['relatedEntityID'];
-    mode = tmp['mode'];
-    if (tmp['visibleBy'] != null) {
+  fromJson(Map<String, dynamic> object) {
+    id = object['id'];
+    timestamp = object['@timestamp'];
+    lastSeen = object['lastSeen'];
+    entityID = object['entityID'];
+    relatedEntityID = object['relatedEntityID'];
+    mode = object['mode'];
+    if (object['visibleBy'] != null) {
       visibleBy = [];
-      tmp['visibleBy'].forEach((element) {
+      object['visibleBy'].forEach((element) {
         visibleBy!.add(element);
       });
     }
