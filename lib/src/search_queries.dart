@@ -88,9 +88,47 @@ class Bool {
 @JsonSerializable()
 class Query {
   final Bool? bool;
+  Map<String, Map<String, dynamic>>? term;
+  Map<String, List<dynamic>>? terms;
+  Map<String, List<dynamic>>? ids;
+  Map<String, Map<String, dynamic>>? range;
+  Map<String, String>? exists;
+  Map<String, String>? prefix;
+  Map<String, Map<String, dynamic>>? fuzzy;
+  Map<String, Map<String, dynamic>>? wildcard;
+  Map<String, String>? regexp;
+  Map<String, Match>? match;
+  @JsonKey(name: 'multi_match')
+  MultiMatch? multiMatch;
+  @JsonKey(name: 'match_bool_prefix')
+  Map<String, MatchBoolPrefix>? matchBoolPrefix;
+  @JsonKey(name: 'match_phrase')
+  Map<String, MatchPhrase>? matchPhrase;
+  @JsonKey(name: 'match_phrase_prefix')
+  Map<String, MatchPhrasePrefix>? matchPhrasePrefix;
+  @JsonKey(name: 'query_string')
+  QueryString? queryString;
+  @JsonKey(name: 'simple_query_string')
+  SimpleQueryString? simpleQueryString;
 
   Query({
     this.bool,
+    this.term,
+    this.terms,
+    this.ids,
+    this.range,
+    this.exists,
+    this.prefix,
+    this.fuzzy,
+    this.wildcard,
+    this.regexp,
+    this.match,
+    this.multiMatch,
+    this.matchBoolPrefix,
+    this.matchPhrase,
+    this.matchPhrasePrefix,
+    this.queryString,
+    this.simpleQueryString,
   });
 
   factory Query.fromJson(Map<String, dynamic> json) => _$QueryFromJson(json);
@@ -104,7 +142,8 @@ class Collapse {
 
   Collapse({this.field});
 
-  factory Collapse.fromJson(Map<String, dynamic> json) => _$CollapseFromJson(json);
+  factory Collapse.fromJson(Map<String, dynamic> json) =>
+      _$CollapseFromJson(json);
 
   Map<String, dynamic> toJson() => _$CollapseToJson(this);
 }
@@ -419,7 +458,8 @@ class TopHits {
 
   TopHits({this.size});
 
-  factory TopHits.fromJson(Map<String, dynamic> json) => _$TopHitsFromJson(json);
+  factory TopHits.fromJson(Map<String, dynamic> json) =>
+      _$TopHitsFromJson(json);
 
   Map<String, dynamic> toJson() => _$TopHitsToJson(this);
 }
@@ -486,4 +526,280 @@ class Cardinality {
       _$CardinalityFromJson(json);
 
   Map<String, dynamic> toJson() => _$CardinalityToJson(this);
+}
+
+@JsonSerializable()
+class Match {
+  String? query;
+  String? fuzziness;
+  @JsonKey(name: 'fuzzy_transpositions')
+  bool? fuzzyTranspositions;
+  String? operator;
+  @JsonKey(name: 'minimum_should_match')
+  int? minimumShouldMatch;
+  String? analyzer;
+  @JsonKey(name: 'zero_terms_query')
+  String? zeroTermsQuery;
+  bool? lenient;
+  @JsonKey(name: 'prefix_length')
+  int? prefixLength;
+  @JsonKey(name: 'max_expansions')
+  int? maxExpansions;
+  int? boost;
+
+  Match({
+    this.query,
+    this.fuzziness,
+    this.fuzzyTranspositions,
+    this.operator,
+    this.minimumShouldMatch,
+    this.analyzer,
+    this.zeroTermsQuery,
+    this.lenient,
+    this.prefixLength,
+    this.maxExpansions,
+    this.boost,
+  });
+
+  factory Match.fromJson(Map<String, dynamic> json) => _$MatchFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MatchToJson(this);
+}
+
+@JsonSerializable()
+class MultiMatch {
+  String? query;
+  List<String>? fields;
+  String? fuzziness;
+  @JsonKey(name: 'fuzzy_transpositions')
+  bool? fuzzyTranspositions;
+  String? operator;
+  @JsonKey(name: 'minimum_should_match')
+  int? minimumShouldMatch;
+  String? analyzer;
+  @JsonKey(name: 'zero_terms_query')
+  String? zeroTermsQuery;
+  bool? lenient;
+  @JsonKey(name: 'prefix_length')
+  int? prefixLength;
+  @JsonKey(name: 'max_expansions')
+  int? maxExpansions;
+  int? boost;
+  String? type;
+  @JsonKey(name: 'tie_breaker')
+  double? tieBreaker;
+  @JsonKey(name: 'auto_generate_synonyms_phrase_query')
+  bool? autoGenerateSynonymsPhraseQuery;
+
+  MultiMatch({
+    this.query,
+    this.fields,
+    this.fuzziness,
+    this.fuzzyTranspositions,
+    this.operator,
+    this.minimumShouldMatch,
+    this.analyzer,
+    this.zeroTermsQuery,
+    this.lenient,
+    this.prefixLength,
+    this.maxExpansions,
+    this.boost,
+    this.type,
+    this.tieBreaker,
+    this.autoGenerateSynonymsPhraseQuery,
+  });
+
+  factory MultiMatch.fromJson(Map<String, dynamic> json) =>
+      _$MultiMatchFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MultiMatchToJson(this);
+}
+
+@JsonSerializable()
+class MatchBoolPrefix {
+  String? query;
+  String? fuzziness;
+  @JsonKey(name: 'fuzzy_transpositions')
+  bool? fuzzyTranspositions;
+  @JsonKey(name: 'max_expansions')
+  int? maxExpansions;
+  @JsonKey(name: 'prefix_length')
+  int? prefixLength;
+  String? operator;
+  @JsonKey(name: 'minimum_should_match')
+  int? minimumShouldMatch;
+  String? analyzer;
+
+  MatchBoolPrefix({
+    this.query,
+    this.fuzziness,
+    this.fuzzyTranspositions,
+    this.maxExpansions,
+    this.prefixLength,
+    this.operator,
+    this.minimumShouldMatch,
+    this.analyzer,
+  });
+
+  factory MatchBoolPrefix.fromJson(Map<String, dynamic> json) =>
+      _$MatchBoolPrefixFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MatchBoolPrefixToJson(this);
+}
+
+@JsonSerializable()
+class MatchPhrase {
+  String? query;
+  int? slop;
+  String? analyzer;
+  @JsonKey(name: 'zero_terms_query')
+  String? zeroTermsQuery;
+
+  MatchPhrase({
+    this.query,
+    this.slop,
+    this.analyzer,
+    this.zeroTermsQuery,
+  });
+
+  factory MatchPhrase.fromJson(Map<String, dynamic> json) =>
+      _$MatchPhraseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MatchPhraseToJson(this);
+}
+
+@JsonSerializable()
+class MatchPhrasePrefix {
+  String? query;
+  String? analyzer;
+  @JsonKey(name: 'max_expansions')
+  int? maxExpansions;
+  int? slop;
+
+  MatchPhrasePrefix({
+    this.query,
+    this.analyzer,
+    this.maxExpansions,
+    this.slop,
+  });
+
+  factory MatchPhrasePrefix.fromJson(Map<String, dynamic> json) =>
+      _$MatchPhrasePrefixFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MatchPhrasePrefixToJson(this);
+}
+
+@JsonSerializable()
+class QueryString {
+  String? query;
+  @JsonKey(name: 'default_field')
+  String? defaultField;
+  String? type;
+  String? fuzziness;
+  @JsonKey(name: 'fuzzy_transpositions')
+  bool? fuzzyTranspositions;
+  @JsonKey(name: 'fuzzy_max_expansions')
+  int? fuzzyMaxExpansions;
+  @JsonKey(name: 'fuzzy_prefix_length')
+  int? fuzzyPrefixLength;
+  @JsonKey(name: 'minimum_should_match')
+  int? minimumShouldMatch;
+  @JsonKey(name: 'default_operator')
+  String? defaultOperator;
+  String? analyzer;
+  bool? lenient;
+  int? boost;
+  @JsonKey(name: 'allow_leading_wildcard')
+  bool? allowLeadingWildcard;
+  @JsonKey(name: 'enable_position_increments')
+  bool? enablePositionIncrements;
+  @JsonKey(name: 'phrase_slop')
+  int? phraseSlop;
+  @JsonKey(name: 'max_determinized_states')
+  int? maxDeterminizedStates;
+  @JsonKey(name: 'time_zone')
+  String? timeZone;
+  @JsonKey(name: 'quote_field_suffix')
+  String? quoteFieldSuffix;
+  @JsonKey(name: 'quote_analyzer')
+  String? quoteAnalyzer;
+  @JsonKey(name: 'analyze_wildcard')
+  bool? analyzeWildcard;
+  @JsonKey(name: 'auto_generate_synonyms_phrase_query')
+  bool? autoGenerateSynonymsPhraseQuery;
+
+  QueryString({
+    this.query,
+    this.defaultField,
+    this.type,
+    this.fuzziness,
+    this.fuzzyTranspositions,
+    this.fuzzyMaxExpansions,
+    this.fuzzyPrefixLength,
+    this.minimumShouldMatch,
+    this.defaultOperator,
+    this.analyzer,
+    this.lenient,
+    this.boost,
+    this.allowLeadingWildcard,
+    this.enablePositionIncrements,
+    this.phraseSlop,
+    this.maxDeterminizedStates,
+    this.timeZone,
+    this.quoteFieldSuffix,
+    this.quoteAnalyzer,
+    this.analyzeWildcard,
+    this.autoGenerateSynonymsPhraseQuery,
+  });
+
+  factory QueryString.fromJson(Map<String, dynamic> json) =>
+      _$QueryStringFromJson(json);
+
+  Map<String, dynamic> toJson() => _$QueryStringToJson(this);
+}
+
+@JsonSerializable()
+class SimpleQueryString {
+  String? query;
+  List<String>? fields;
+  String? flags;
+  @JsonKey(name: 'fuzzy_transpositions')
+  bool? fuzzyTranspositions;
+  @JsonKey(name: 'fuzzy_max_expansions')
+  int? fuzzyMaxExpansions;
+  @JsonKey(name: 'fuzzy_prefix_length')
+  int? fuzzyPrefixLength;
+  @JsonKey(name: 'minimum_should_match')
+  int? minimumShouldMatch;
+  @JsonKey(name: 'default_operator')
+  String? defaultOperator;
+  String? analyzer;
+  bool? lenient;
+  @JsonKey(name: 'quote_field_suffix')
+  String? quoteFieldSuffix;
+  @JsonKey(name: 'analyze_wildcard')
+  bool? analyzeWildcard;
+  @JsonKey(name: 'auto_generate_synonyms_phrase_query')
+  bool? autoGenerateSynonymsPhraseQuery;
+
+  SimpleQueryString({
+    this.query,
+    this.fields,
+    this.flags,
+    this.fuzzyTranspositions,
+    this.fuzzyMaxExpansions,
+    this.fuzzyPrefixLength,
+    this.minimumShouldMatch,
+    this.defaultOperator,
+    this.analyzer,
+    this.lenient,
+    this.quoteFieldSuffix,
+    this.analyzeWildcard,
+    this.autoGenerateSynonymsPhraseQuery,
+  });
+
+  factory SimpleQueryString.fromJson(Map<String, dynamic> json) =>
+      _$SimpleQueryStringFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SimpleQueryStringToJson(this);
 }

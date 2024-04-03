@@ -93,10 +93,79 @@ Query _$QueryFromJson(Map<String, dynamic> json) => Query(
       bool: json['bool'] == null
           ? null
           : Bool.fromJson(json['bool'] as Map<String, dynamic>),
+      term: (json['term'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as Map<String, dynamic>),
+      ),
+      terms: (json['terms'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as List<dynamic>),
+      ),
+      ids: (json['ids'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as List<dynamic>),
+      ),
+      range: (json['range'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as Map<String, dynamic>),
+      ),
+      exists: (json['exists'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      prefix: (json['prefix'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      fuzzy: (json['fuzzy'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as Map<String, dynamic>),
+      ),
+      wildcard: (json['wildcard'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as Map<String, dynamic>),
+      ),
+      regexp: (json['regexp'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      match: (json['match'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, Match.fromJson(e as Map<String, dynamic>)),
+      ),
+      multiMatch: json['multi_match'] == null
+          ? null
+          : MultiMatch.fromJson(json['multi_match'] as Map<String, dynamic>),
+      matchBoolPrefix:
+          (json['match_bool_prefix'] as Map<String, dynamic>?)?.map(
+        (k, e) =>
+            MapEntry(k, MatchBoolPrefix.fromJson(e as Map<String, dynamic>)),
+      ),
+      matchPhrase: (json['match_phrase'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, MatchPhrase.fromJson(e as Map<String, dynamic>)),
+      ),
+      matchPhrasePrefix:
+          (json['match_phrase_prefix'] as Map<String, dynamic>?)?.map(
+        (k, e) =>
+            MapEntry(k, MatchPhrasePrefix.fromJson(e as Map<String, dynamic>)),
+      ),
+      queryString: json['query_string'] == null
+          ? null
+          : QueryString.fromJson(json['query_string'] as Map<String, dynamic>),
+      simpleQueryString: json['simple_query_string'] == null
+          ? null
+          : SimpleQueryString.fromJson(
+              json['simple_query_string'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$QueryToJson(Query instance) => <String, dynamic>{
       'bool': instance.bool,
+      'term': instance.term,
+      'terms': instance.terms,
+      'ids': instance.ids,
+      'range': instance.range,
+      'exists': instance.exists,
+      'prefix': instance.prefix,
+      'fuzzy': instance.fuzzy,
+      'wildcard': instance.wildcard,
+      'regexp': instance.regexp,
+      'match': instance.match,
+      'multi_match': instance.multiMatch,
+      'match_bool_prefix': instance.matchBoolPrefix,
+      'match_phrase': instance.matchPhrase,
+      'match_phrase_prefix': instance.matchPhrasePrefix,
+      'query_string': instance.queryString,
+      'simple_query_string': instance.simpleQueryString,
     };
 
 Collapse _$CollapseFromJson(Map<String, dynamic> json) => Collapse(
@@ -463,4 +532,215 @@ Map<String, dynamic> _$CardinalityToJson(Cardinality instance) =>
     <String, dynamic>{
       'field': instance.field,
       'precision_threshold': instance.precisionThreshold,
+    };
+
+Match _$MatchFromJson(Map<String, dynamic> json) => Match(
+      query: json['query'] as String?,
+      fuzziness: json['fuzziness'] as String?,
+      fuzzyTranspositions: json['fuzzy_transpositions'] as bool?,
+      operator: json['operator'] as String?,
+      minimumShouldMatch: json['minimum_should_match'] as int?,
+      analyzer: json['analyzer'] as String?,
+      zeroTermsQuery: json['zero_terms_query'] as String?,
+      lenient: json['lenient'] as bool?,
+      prefixLength: json['prefix_length'] as int?,
+      maxExpansions: json['max_expansions'] as int?,
+      boost: json['boost'] as int?,
+    );
+
+Map<String, dynamic> _$MatchToJson(Match instance) => <String, dynamic>{
+      'query': instance.query,
+      'fuzziness': instance.fuzziness,
+      'fuzzy_transpositions': instance.fuzzyTranspositions,
+      'operator': instance.operator,
+      'minimum_should_match': instance.minimumShouldMatch,
+      'analyzer': instance.analyzer,
+      'zero_terms_query': instance.zeroTermsQuery,
+      'lenient': instance.lenient,
+      'prefix_length': instance.prefixLength,
+      'max_expansions': instance.maxExpansions,
+      'boost': instance.boost,
+    };
+
+MultiMatch _$MultiMatchFromJson(Map<String, dynamic> json) => MultiMatch(
+      query: json['query'] as String?,
+      fields:
+          (json['fields'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      fuzziness: json['fuzziness'] as String?,
+      fuzzyTranspositions: json['fuzzy_transpositions'] as bool?,
+      operator: json['operator'] as String?,
+      minimumShouldMatch: json['minimum_should_match'] as int?,
+      analyzer: json['analyzer'] as String?,
+      zeroTermsQuery: json['zero_terms_query'] as String?,
+      lenient: json['lenient'] as bool?,
+      prefixLength: json['prefix_length'] as int?,
+      maxExpansions: json['max_expansions'] as int?,
+      boost: json['boost'] as int?,
+      type: json['type'] as String?,
+      tieBreaker: (json['tie_breaker'] as num?)?.toDouble(),
+      autoGenerateSynonymsPhraseQuery:
+          json['auto_generate_synonyms_phrase_query'] as bool?,
+    );
+
+Map<String, dynamic> _$MultiMatchToJson(MultiMatch instance) =>
+    <String, dynamic>{
+      'query': instance.query,
+      'fields': instance.fields,
+      'fuzziness': instance.fuzziness,
+      'fuzzy_transpositions': instance.fuzzyTranspositions,
+      'operator': instance.operator,
+      'minimum_should_match': instance.minimumShouldMatch,
+      'analyzer': instance.analyzer,
+      'zero_terms_query': instance.zeroTermsQuery,
+      'lenient': instance.lenient,
+      'prefix_length': instance.prefixLength,
+      'max_expansions': instance.maxExpansions,
+      'boost': instance.boost,
+      'type': instance.type,
+      'tie_breaker': instance.tieBreaker,
+      'auto_generate_synonyms_phrase_query':
+          instance.autoGenerateSynonymsPhraseQuery,
+    };
+
+MatchBoolPrefix _$MatchBoolPrefixFromJson(Map<String, dynamic> json) =>
+    MatchBoolPrefix(
+      query: json['query'] as String?,
+      fuzziness: json['fuzziness'] as String?,
+      fuzzyTranspositions: json['fuzzy_transpositions'] as bool?,
+      maxExpansions: json['max_expansions'] as int?,
+      prefixLength: json['prefix_length'] as int?,
+      operator: json['operator'] as String?,
+      minimumShouldMatch: json['minimum_should_match'] as int?,
+      analyzer: json['analyzer'] as String?,
+    );
+
+Map<String, dynamic> _$MatchBoolPrefixToJson(MatchBoolPrefix instance) =>
+    <String, dynamic>{
+      'query': instance.query,
+      'fuzziness': instance.fuzziness,
+      'fuzzy_transpositions': instance.fuzzyTranspositions,
+      'max_expansions': instance.maxExpansions,
+      'prefix_length': instance.prefixLength,
+      'operator': instance.operator,
+      'minimum_should_match': instance.minimumShouldMatch,
+      'analyzer': instance.analyzer,
+    };
+
+MatchPhrase _$MatchPhraseFromJson(Map<String, dynamic> json) => MatchPhrase(
+      query: json['query'] as String?,
+      slop: json['slop'] as int?,
+      analyzer: json['analyzer'] as String?,
+      zeroTermsQuery: json['zero_terms_query'] as String?,
+    );
+
+Map<String, dynamic> _$MatchPhraseToJson(MatchPhrase instance) =>
+    <String, dynamic>{
+      'query': instance.query,
+      'slop': instance.slop,
+      'analyzer': instance.analyzer,
+      'zero_terms_query': instance.zeroTermsQuery,
+    };
+
+MatchPhrasePrefix _$MatchPhrasePrefixFromJson(Map<String, dynamic> json) =>
+    MatchPhrasePrefix(
+      query: json['query'] as String?,
+      analyzer: json['analyzer'] as String?,
+      maxExpansions: json['max_expansions'] as int?,
+      slop: json['slop'] as int?,
+    );
+
+Map<String, dynamic> _$MatchPhrasePrefixToJson(MatchPhrasePrefix instance) =>
+    <String, dynamic>{
+      'query': instance.query,
+      'analyzer': instance.analyzer,
+      'max_expansions': instance.maxExpansions,
+      'slop': instance.slop,
+    };
+
+QueryString _$QueryStringFromJson(Map<String, dynamic> json) => QueryString(
+      query: json['query'] as String?,
+      defaultField: json['default_field'] as String?,
+      type: json['type'] as String?,
+      fuzziness: json['fuzziness'] as String?,
+      fuzzyTranspositions: json['fuzzy_transpositions'] as bool?,
+      fuzzyMaxExpansions: json['fuzzy_max_expansions'] as int?,
+      fuzzyPrefixLength: json['fuzzy_prefix_length'] as int?,
+      minimumShouldMatch: json['minimum_should_match'] as int?,
+      defaultOperator: json['default_operator'] as String?,
+      analyzer: json['analyzer'] as String?,
+      lenient: json['lenient'] as bool?,
+      boost: json['boost'] as int?,
+      allowLeadingWildcard: json['allow_leading_wildcard'] as bool?,
+      enablePositionIncrements: json['enable_position_increments'] as bool?,
+      phraseSlop: json['phrase_slop'] as int?,
+      maxDeterminizedStates: json['max_determinized_states'] as int?,
+      timeZone: json['time_zone'] as String?,
+      quoteFieldSuffix: json['quote_field_suffix'] as String?,
+      quoteAnalyzer: json['quote_analyzer'] as String?,
+      analyzeWildcard: json['analyze_wildcard'] as bool?,
+      autoGenerateSynonymsPhraseQuery:
+          json['auto_generate_synonyms_phrase_query'] as bool?,
+    );
+
+Map<String, dynamic> _$QueryStringToJson(QueryString instance) =>
+    <String, dynamic>{
+      'query': instance.query,
+      'default_field': instance.defaultField,
+      'type': instance.type,
+      'fuzziness': instance.fuzziness,
+      'fuzzy_transpositions': instance.fuzzyTranspositions,
+      'fuzzy_max_expansions': instance.fuzzyMaxExpansions,
+      'fuzzy_prefix_length': instance.fuzzyPrefixLength,
+      'minimum_should_match': instance.minimumShouldMatch,
+      'default_operator': instance.defaultOperator,
+      'analyzer': instance.analyzer,
+      'lenient': instance.lenient,
+      'boost': instance.boost,
+      'allow_leading_wildcard': instance.allowLeadingWildcard,
+      'enable_position_increments': instance.enablePositionIncrements,
+      'phrase_slop': instance.phraseSlop,
+      'max_determinized_states': instance.maxDeterminizedStates,
+      'time_zone': instance.timeZone,
+      'quote_field_suffix': instance.quoteFieldSuffix,
+      'quote_analyzer': instance.quoteAnalyzer,
+      'analyze_wildcard': instance.analyzeWildcard,
+      'auto_generate_synonyms_phrase_query':
+          instance.autoGenerateSynonymsPhraseQuery,
+    };
+
+SimpleQueryString _$SimpleQueryStringFromJson(Map<String, dynamic> json) =>
+    SimpleQueryString(
+      query: json['query'] as String?,
+      fields:
+          (json['fields'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      flags: json['flags'] as String?,
+      fuzzyTranspositions: json['fuzzy_transpositions'] as bool?,
+      fuzzyMaxExpansions: json['fuzzy_max_expansions'] as int?,
+      fuzzyPrefixLength: json['fuzzy_prefix_length'] as int?,
+      minimumShouldMatch: json['minimum_should_match'] as int?,
+      defaultOperator: json['default_operator'] as String?,
+      analyzer: json['analyzer'] as String?,
+      lenient: json['lenient'] as bool?,
+      quoteFieldSuffix: json['quote_field_suffix'] as String?,
+      analyzeWildcard: json['analyze_wildcard'] as bool?,
+      autoGenerateSynonymsPhraseQuery:
+          json['auto_generate_synonyms_phrase_query'] as bool?,
+    );
+
+Map<String, dynamic> _$SimpleQueryStringToJson(SimpleQueryString instance) =>
+    <String, dynamic>{
+      'query': instance.query,
+      'fields': instance.fields,
+      'flags': instance.flags,
+      'fuzzy_transpositions': instance.fuzzyTranspositions,
+      'fuzzy_max_expansions': instance.fuzzyMaxExpansions,
+      'fuzzy_prefix_length': instance.fuzzyPrefixLength,
+      'minimum_should_match': instance.minimumShouldMatch,
+      'default_operator': instance.defaultOperator,
+      'analyzer': instance.analyzer,
+      'lenient': instance.lenient,
+      'quote_field_suffix': instance.quoteFieldSuffix,
+      'analyze_wildcard': instance.analyzeWildcard,
+      'auto_generate_synonyms_phrase_query':
+          instance.autoGenerateSynonymsPhraseQuery,
     };
