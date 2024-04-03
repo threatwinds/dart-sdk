@@ -1,304 +1,155 @@
 library threatwinds_sdk.search_results;
 
-import 'dart:convert';
-import 'package:threatwinds_sdk/src/abstractions.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class EntityResults implements Json {
-  late int pages;
-  late int items;
-  late List<EntityObject> results;
-  Map<String, dynamic>? aggregations;
+part 'search_results.g.dart';
 
-  @override
-  fromJson(Map<String, dynamic> object) {
-    pages = object['pages'];
-    items = object['items'];
-    if (object['results'] != null) {
-      results = [];
-      object['results'].forEach((element) {
-        results.add(parseResult(element as Map<String, dynamic>));
-      });
-    }
+@JsonSerializable()
+class EntityResults {
+  final int pages;
+  final int items;
+  final List<EntityObject> results;
+  final Map<String, dynamic>? aggregations;
 
-    aggregations = object['aggregations'];
-  }
+  EntityResults({
+    required this.pages,
+    required this.items,
+    required this.results,
+    this.aggregations,
+  });
 
-  EntityObject parseResult(Map<String, dynamic> object) {
-    EntityObject entity = EntityObject();
-    entity.fromJson(object);
-    return entity;
-  }
+  factory EntityResults.fromJson(Map<String, dynamic> json) =>
+      _$EntityResultsFromJson(json);
 
-  @override
-  String toJson() {
-    return jsonEncode({
-      'pages': pages,
-      'items': items,
-      'results': results,
-      'aggregations': aggregations,
-    });
-  }
+  Map<String, dynamic> toJson() => _$EntityResultsToJson(this);
 }
 
-class EntityHistoryResults implements Json {
-  late int pages;
-  late int items;
-  late List<EntityHistoryObject> results;
-  Map<String, dynamic>? aggregations;
+@JsonSerializable()
+class EntityHistoryResults {
+  final int pages;
+  final int items;
+  final List<EntityHistoryObject> results;
+  final Map<String, dynamic>? aggregations;
 
-  @override
-  fromJson(Map<String, dynamic> object) {
-    pages = object['pages'];
-    items = object['items'];
-    if (object['results'] != null) {
-      results = [];
-      object['results'].forEach((element) {
-        results.add(parseResult(element as Map<String, dynamic>));
-      });
-    }
+  EntityHistoryResults({
+    required this.pages,
+    required this.items,
+    required this.results,
+    this.aggregations,
+  });
 
-    aggregations = object['aggregations'];
-  }
+  factory EntityHistoryResults.fromJson(Map<String, dynamic> json) =>
+      _$EntityHistoryResultsFromJson(json);
 
-  EntityHistoryObject parseResult(Map<String, dynamic> object) {
-    EntityHistoryObject entity = EntityHistoryObject();
-    entity.fromJson(object);
-    return entity;
-  }
-
-  @override
-  String toJson() {
-    return jsonEncode({
-      'pages': pages,
-      'items': items,
-      'results': results,
-      'aggregations': aggregations,
-    });
-  }
+  Map<String, dynamic> toJson() => _$EntityHistoryResultsToJson(this);
 }
 
-class EntityObject implements Json {
-  String? id;
-  late String timestamp;
-  late String lastSeen;
-  late String type;
-  late int reputation;
-  late int bestReputation;
-  late int worstReputation;
-  late int accuracy;
-  Map<String, dynamic>? attributes;
-  List<String>? tags;
-  List<String>? visibleBy;
+@JsonSerializable()
+class CommentResults {
+  final int pages;
+  final int items;
+  final List<CommentObject> results;
+  final Map<String, dynamic>? aggregations;
 
-  @override
-  fromJson(Map<String, dynamic> object) {
-    id = object['id'];
-    timestamp = object['@timestamp'];
-    lastSeen = object['lastSeen'];
-    type = object['type'];
-    reputation = object['reputation'];
-    bestReputation = object['bestReputation'];
-    worstReputation = object['worstReputation'];
-    accuracy = object['accuracy'];
-    attributes = object['attributes'];
-    if (object['tags'] != null) {
-      tags = [];
-      object['tags'].forEach((element) {
-        tags!.add(element);
-      });
-    }
-    if (object['visibleBy'] != null) {
-      visibleBy = [];
-      object['visibleBy'].forEach((element) {
-        visibleBy!.add(element);
-      });
-    }
-  }
+  CommentResults({
+    required this.pages,
+    required this.items,
+    required this.results,
+    this.aggregations,
+  });
 
-  @override
-  String toJson() {
-    return jsonEncode({
-      'id': id,
-      '@timestamp': timestamp,
-      'lastSeen': lastSeen,
-      'type': type,
-      'reputation': reputation,
-      'bestReputation': bestReputation,
-      'worstReputation': worstReputation,
-      'accuracy': accuracy,
-      'attributes': attributes,
-      'tags': tags,
-      'visibleBy': visibleBy,
-    });
-  }
+  factory CommentResults.fromJson(Map<String, dynamic> json) =>
+      _$CommentResultsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CommentResultsToJson(this);
 }
 
-class EntityHistoryObject implements Json {
-  String? id;
-  late String timestamp;
-  late String entityID;
-  late String type;
-  late String userID;
-  late int reputation;
-  Map<String, dynamic>? attributes;
-  List<String>? tags;
-  List<String>? visibleBy;
+@JsonSerializable()
+class EntityObject {
+  final String id;
+  @JsonKey(name: '@timestamp')
+  final String timestamp;
+  final String lastSeen;
+  final String type;
+  final int reputation;
+  final int bestReputation;
+  final int worstReputation;
+  final int accuracy;
+  final Map<String, dynamic> attributes;
+  final List<String> tags;
+  final List<String> visibleBy;
 
-  @override
-  fromJson(Map<String, dynamic> object) {
-    id = object['id'];
-    timestamp = object['@timestamp'];
-    entityID = object['entityID'];
-    type = object['type'];
-    userID = object['userID'];
-    reputation = object['reputation'];
-    attributes = object['attributes'];
-    if (object['tags'] != null) {
-      tags = [];
-      object['tags'].forEach((element) {
-        tags!.add(element);
-      });
-    }
-    if (object['visibleBy'] != null) {
-      visibleBy = [];
-      object['visibleBy'].forEach((element) {
-        visibleBy!.add(element);
-      });
-    }
-  }
+  EntityObject(
+      {required this.id,
+      required this.timestamp,
+      required this.lastSeen,
+      required this.type,
+      required this.reputation,
+      required this.bestReputation,
+      required this.worstReputation,
+      required this.accuracy,
+      required this.attributes,
+      required this.tags,
+      required this.visibleBy});
 
-  @override
-  String toJson() {
-    return jsonEncode({
-      'id': id,
-      '@timestamp': timestamp,
-      'entityID': entityID,
-      'type': type,
-      'userID': userID.toString(),
-      'reputation': reputation,
-      'attributes': attributes,
-      'tags': tags,
-      'visibleBy': visibleBy,
-    });
-  }
+  factory EntityObject.fromJson(Map<String, dynamic> json) =>
+      _$EntityObjectFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EntityObjectToJson(this);
 }
 
-class RelationObject implements Json {
-  String? id;
-  late String timestamp;
-  late String lastSeen;
-  late String entityID;
-  late String relatedEntityID;
-  late String mode;
-  List<String>? visibleBy;
+@JsonSerializable()
+class EntityHistoryObject {
+  final String id;
+  @JsonKey(name: '@timestamp')
+  final String timestamp;
+  final String entityID;
+  final String type;
+  final String userID;
+  final int reputation;
+  final Map<String, dynamic>? attributes;
+  final List<String>? tags;
+  final List<String>? visibleBy;
 
-  @override
-  fromJson(Map<String, dynamic> object) {
-    id = object['id'];
-    timestamp = object['@timestamp'];
-    lastSeen = object['lastSeen'];
-    entityID = object['entityID'];
-    relatedEntityID = object['relatedEntityID'];
-    mode = object['mode'];
-    if (object['visibleBy'] != null) {
-      visibleBy = [];
-      object['visibleBy'].forEach((element) {
-        visibleBy!.add(element);
-      });
-    }
-  }
+  EntityHistoryObject(
+      {required this.id,
+      required this.timestamp,
+      required this.entityID,
+      required this.type,
+      required this.userID,
+      required this.reputation,
+      this.attributes,
+      this.tags,
+      this.visibleBy});
 
-  @override
-  String toJson() {
-    return jsonEncode({
-      'id': id,
-      '@timestamp': timestamp,
-      'lastSeen': lastSeen,
-      'entityID': entityID,
-      'relatedEntityID': relatedEntityID,
-      'mode': mode,
-      'visibleBy': visibleBy,
-    });
-  }
+  factory EntityHistoryObject.fromJson(Map<String, dynamic> json) =>
+      _$EntityHistoryObjectFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EntityHistoryObjectToJson(this);
 }
 
-class RelationHistoryObject implements Json {
-  String? id;
-  late String timestamp;
-  late String relationID;
-  late String entityID;
-  late String relatedEntityID;
-  late String userID;
-  late String mode;
-  List<String>? visibleBy;
+@JsonSerializable()
+class CommentObject {
+  final String id;
+  @JsonKey(name: '@timestamp')
+  final String timestamp;
+  final String entityID;
+  final String comment;
+  final String userID;
+  final String? parentID;
+  final List<String>? visibleBy;
 
-  @override
-  fromJson(Map<String, dynamic> object) {
-    id = object['id'];
-    timestamp = object['@timestamp'];
-    relationID = object['relationID'];
-    entityID = object['entityID'];
-    relatedEntityID = object['relatedEntityID'];
-    userID = object['userID'];
-    mode = object['mode'];
-    if (object['visibleBy'] != null) {
-      visibleBy = [];
-      object['visibleBy'].forEach((element) {
-        visibleBy!.add(element);
-      });
-    }
-  }
+  CommentObject(
+      {required this.id,
+      required this.timestamp,
+      required this.entityID,
+      required this.comment,
+      required this.userID,
+      this.parentID,
+      this.visibleBy});
 
-  @override
-  String toJson() {
-    return jsonEncode({
-      'id': id,
-      '@timestamp': timestamp,
-      'relationID': relationID,
-      'entityID': entityID,
-      'relatedEntityID': relatedEntityID,
-      'userID': userID,
-      'mode': mode,
-      'visibleBy': visibleBy,
-    });
-  }
-}
+  factory CommentObject.fromJson(Map<String, dynamic> json) =>
+      _$CommentObjectFromJson(json);
 
-class CommentObject implements Json {
-  String? id;
-  late String timestamp;
-  late String entityID;
-  late String comment;
-  late String userID;
-  late String parentID;
-  List<String>? visibleBy;
-
-  @override
-  fromJson(Map<String, dynamic> object) {
-    id = object['id'];
-    timestamp = object['@timestamp'];
-    entityID = object['entityID'];
-    comment = object['comment'];
-    userID = object['userID'];
-    parentID = object['parentID'];
-    if (object['visibleBy'] != null) {
-      visibleBy = [];
-      object['visibleBy'].forEach((element) {
-        visibleBy!.add(element);
-      });
-    }
-  }
-
-  @override
-  String toJson() {
-    return jsonEncode({
-      'id': id,
-      '@timestamp': timestamp,
-      'entityID': entityID,
-      'comment': comment,
-      'userID': userID.toString(),
-      'parentID': parentID.toString(),
-      'visibleBy': visibleBy,
-    });
-  }
+  Map<String, dynamic> toJson() => _$CommentObjectToJson(this);
 }

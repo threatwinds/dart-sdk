@@ -12,9 +12,8 @@ void main() {
   final resp = req.doReq(cli: client);
 
   resp.then((body) {
-    Details result = Details();
-    result.fromJson(body);
-    print(result.toJson());
+    Details result = Details.fromJson(body);
+    print(result.attributes.toJson());
   });
 
   resp.catchError((error) {

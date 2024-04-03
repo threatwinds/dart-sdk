@@ -17,8 +17,7 @@ void main() {
       expect(resp, completes);
 
       resp.then((body) {
-        Details result = Details();
-        result.fromJson(body);
+        Details result = Details.fromJson(body);
         print(result);
       });
     });
