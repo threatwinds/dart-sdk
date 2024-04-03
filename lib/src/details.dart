@@ -1,10 +1,9 @@
 library threatwinds_sdk.details;
 
 import 'dart:convert';
+import 'package:threatwinds_sdk/src/abstractions.dart';
 
-import 'package:threatwinds_sdk/src/parseable.dart';
-
-class Details implements Parseable {
+class Details implements Json {
   late Attributes attributes;
   Map<String, dynamic>? metadata;
   List<Attributes>? extendedMetadata;
@@ -14,7 +13,7 @@ class Details implements Parseable {
 
   @override
   fromJson(Map<String, dynamic> object) {
-    Attributes attributes = Attributes();
+    attributes = Attributes();
 
     attributes.fromJson(object['attributes']);
     metadata = object['metadata'];
@@ -67,7 +66,7 @@ class Details implements Parseable {
   }
 }
 
-class Attributes implements Parseable {
+class Attributes implements Json {
   late String firstSeen;
   late String lastSeen;
   late String id;
@@ -129,8 +128,8 @@ class Attributes implements Parseable {
 }
 
 class Association extends Attributes {
-  double? bgCount;
-  double? count;
+  int? bgCount;
+  int? count;
   double? significanceScore;
 
   @override

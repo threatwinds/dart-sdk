@@ -1,11 +1,7 @@
-// ignore_for_file: unused_import
-
 library threatwinds_sdk.requests;
 
 import 'dart:convert';
-
 import 'client.dart';
-import 'package:threatwinds_sdk/src/parseable.dart';
 import 'package:http/http.dart' as http;
 
 class Request {

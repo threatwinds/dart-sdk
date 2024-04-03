@@ -1,13 +1,12 @@
-library threatwinds_sdk.results;
+library threatwinds_sdk.search_results;
 
 import 'dart:convert';
-import 'package:threatwinds_sdk/src/parseable.dart';
-import 'package:uuid/uuid.dart';
+import 'package:threatwinds_sdk/src/abstractions.dart';
 
-class EntityResults implements Parseable {
+class EntityResults implements Json {
   late int pages;
   late int items;
-  late List<Entity> results;
+  late List<EntityObject> results;
   Map<String, dynamic>? aggregations;
 
   @override
@@ -24,8 +23,8 @@ class EntityResults implements Parseable {
     aggregations = object['aggregations'];
   }
 
-  Entity parseResult(Map<String, dynamic> object) {
-    Entity entity = Entity();
+  EntityObject parseResult(Map<String, dynamic> object) {
+    EntityObject entity = EntityObject();
     entity.fromJson(object);
     return entity;
   }
@@ -41,7 +40,44 @@ class EntityResults implements Parseable {
   }
 }
 
-class Entity implements Parseable {
+class EntityHistoryResults implements Json {
+  late int pages;
+  late int items;
+  late List<EntityHistoryObject> results;
+  Map<String, dynamic>? aggregations;
+
+  @override
+  fromJson(Map<String, dynamic> object) {
+    pages = object['pages'];
+    items = object['items'];
+    if (object['results'] != null) {
+      results = [];
+      object['results'].forEach((element) {
+        results.add(parseResult(element as Map<String, dynamic>));
+      });
+    }
+
+    aggregations = object['aggregations'];
+  }
+
+  EntityHistoryObject parseResult(Map<String, dynamic> object) {
+    EntityHistoryObject entity = EntityHistoryObject();
+    entity.fromJson(object);
+    return entity;
+  }
+
+  @override
+  String toJson() {
+    return jsonEncode({
+      'pages': pages,
+      'items': items,
+      'results': results,
+      'aggregations': aggregations,
+    });
+  }
+}
+
+class EntityObject implements Json {
   String? id;
   late String timestamp;
   late String lastSeen;
@@ -97,12 +133,12 @@ class Entity implements Parseable {
   }
 }
 
-class EntityHistory implements Parseable {
+class EntityHistoryObject implements Json {
   String? id;
   late String timestamp;
   late String entityID;
   late String type;
-  late Uuid userID;
+  late String userID;
   late int reputation;
   Map<String, dynamic>? attributes;
   List<String>? tags;
@@ -114,7 +150,7 @@ class EntityHistory implements Parseable {
     timestamp = object['@timestamp'];
     entityID = object['entityID'];
     type = object['type'];
-    userID = Uuid.parse(object['user_id']) as Uuid;
+    userID = object['userID'];
     reputation = object['reputation'];
     attributes = object['attributes'];
     if (object['tags'] != null) {
@@ -147,7 +183,7 @@ class EntityHistory implements Parseable {
   }
 }
 
-class Relation implements Parseable {
+class RelationObject implements Json {
   String? id;
   late String timestamp;
   late String lastSeen;
@@ -187,29 +223,28 @@ class Relation implements Parseable {
   }
 }
 
-class RelationHistory implements Parseable {
+class RelationHistoryObject implements Json {
   String? id;
   late String timestamp;
   late String relationID;
   late String entityID;
   late String relatedEntityID;
-  late Uuid userID;
+  late String userID;
   late String mode;
   List<String>? visibleBy;
 
   @override
-  fromJson(dynamic object) {
-    Map<String, dynamic> tmp = jsonDecode(object);
-    id = tmp['id'];
-    timestamp = tmp['@timestamp'];
-    relationID = tmp['relationID'];
-    entityID = tmp['entityID'];
-    relatedEntityID = tmp['relatedEntityID'];
-    userID = Uuid.parse(tmp['userID']) as Uuid;
-    mode = tmp['mode'];
-    if (tmp['visibleBy'] != null) {
+  fromJson(Map<String, dynamic> object) {
+    id = object['id'];
+    timestamp = object['@timestamp'];
+    relationID = object['relationID'];
+    entityID = object['entityID'];
+    relatedEntityID = object['relatedEntityID'];
+    userID = object['userID'];
+    mode = object['mode'];
+    if (object['visibleBy'] != null) {
       visibleBy = [];
-      tmp['visibleBy'].forEach((element) {
+      object['visibleBy'].forEach((element) {
         visibleBy!.add(element);
       });
     }
@@ -223,34 +258,33 @@ class RelationHistory implements Parseable {
       'relationID': relationID,
       'entityID': entityID,
       'relatedEntityID': relatedEntityID,
-      'userID': userID.toString(),
+      'userID': userID,
       'mode': mode,
       'visibleBy': visibleBy,
     });
   }
 }
 
-class Comment implements Parseable {
+class CommentObject implements Json {
   String? id;
   late String timestamp;
   late String entityID;
   late String comment;
-  late Uuid userID;
-  late Uuid parentID;
+  late String userID;
+  late String parentID;
   List<String>? visibleBy;
 
   @override
-  fromJson(dynamic object) {
-    Map<String, dynamic> tmp = jsonDecode(object);
-    id = tmp['id'];
-    timestamp = tmp['@timestamp'];
-    entityID = tmp['entityID'];
-    comment = tmp['comment'];
-    userID = Uuid.parse(tmp['userID']) as Uuid;
-    parentID = Uuid.parse(tmp['parentID']) as Uuid;
-    if (tmp['visibleBy'] != null) {
+  fromJson(Map<String, dynamic> object) {
+    id = object['id'];
+    timestamp = object['@timestamp'];
+    entityID = object['entityID'];
+    comment = object['comment'];
+    userID = object['userID'];
+    parentID = object['parentID'];
+    if (object['visibleBy'] != null) {
       visibleBy = [];
-      tmp['visibleBy'].forEach((element) {
+      object['visibleBy'].forEach((element) {
         visibleBy!.add(element);
       });
     }
