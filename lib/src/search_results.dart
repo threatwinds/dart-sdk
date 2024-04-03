@@ -72,8 +72,8 @@ class EntityObject {
   final String lastSeen;
   final String type;
   final int reputation;
-  final int bestReputation;
-  final int worstReputation;
+  final int? bestReputation;
+  final int? worstReputation;
   final int accuracy;
   final Map<String, dynamic> attributes;
   final List<String>? tags;

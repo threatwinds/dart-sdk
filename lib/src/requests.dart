@@ -83,9 +83,10 @@ class Request {
     if (resp.statusCode == 200 || resp.statusCode == 202) {
       return jsonDecode(resp.body) as Map<String, dynamic>;
     } else if (resp.statusCode == 204) {
-      throw Exception('empty response: ${resp.body}');
+      throw Exception('no content');
     } else {
-      throw Exception('unexpected response: ${resp.body}');
+      throw Exception(
+          'unexpected response: ${resp.headers['x-error'].toString()}');
     }
   }
 }
