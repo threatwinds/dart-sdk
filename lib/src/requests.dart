@@ -1,7 +1,7 @@
 library threatwinds_sdk.requests;
 
-import 'threatwinds_client.dart';
 import 'dart:convert';
+import 'client.dart';
 import 'package:http/http.dart' as http;
 
 class Request {
@@ -18,7 +18,7 @@ class Request {
       this.params,
       this.headers});
 
-  Future<respObject> doReq<respObject>({required Client cli}) async {
+  Future<Map<String, dynamic>> doReq({required Client cli}) async {
     http.Response resp;
 
     if (cli.authorization != null) {
@@ -81,7 +81,7 @@ class Request {
     }
 
     if (resp.statusCode == 200 || resp.statusCode == 202) {
-      return jsonDecode(resp.body) as respObject;
+      return jsonDecode(resp.body) as Map<String, dynamic>;
     } else if (resp.statusCode == 204) {
       throw Exception('empty response: ${resp.body}');
     } else {

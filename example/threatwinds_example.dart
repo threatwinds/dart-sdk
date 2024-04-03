@@ -3,20 +3,21 @@ import 'package:threatwinds_sdk/threatwinds_sdk.dart';
 void main() {
   final client = Client(hostname: "intelligence.threatwinds.com");
 
-  Map<String, String> params = {
-    "limit": "1",
-  };
-
-  const query =
-      '{"aggs":{"byTypes":{"terms":{"field":"type.keyword"}}},"query":{"must":[{"terms":{"type.keyword":["domain","hostname","url","ip","malware","sha1","sha224","sha256","sha384","sha512","sha512-224","sha512-256","sha3-224","sha3-256","sha3-384","sha3-512","authentihash","cdhash","md5"]}}]},"source":{"excludes":["*"]}}';
-
   final req = Request(
-      method: "POST",
-      endpoint: "/api/search/v1/entities",
-      query: query,
-      params: params);
+    method: "GET",
+    endpoint:
+        "/api/analytics/v1/entity/ip-ba7fa36bff8d58ee45b973615e83d9aaeb921f1cc477d9c156e8a9cae8cca16e/details",
+  );
 
-  final resp = req.doReq<Map<String, dynamic>>(cli: client);
+  final resp = req.doReq(cli: client);
 
-  resp.then((value) => print(value));
+  resp.then((body) {
+    Details result = Details();
+    result.fromJson(body);
+    print(result.toJson());
+  });
+
+  resp.catchError((error) {
+    throw Exception(error);
+  });
 }
