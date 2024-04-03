@@ -8,7 +8,7 @@ class Request {
   String method;
   String endpoint;
   String? query;
-  Map<String, String>? params;
+  Map<String, dynamic>? params;
   Map<String, String>? headers;
 
   Request(
