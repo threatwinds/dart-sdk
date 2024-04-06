@@ -7,9 +7,13 @@ part 'details.g.dart';
 class Details {
   final Attributes attributes;
   final Map<String, dynamic>? metadata;
+  @JsonKey(name: 'extended_metadata')
   final List<Attributes>? extendedMetadata;
+  @JsonKey(name: 'last_associations')
   final List<Association>? lastAssociations;
+  @JsonKey(name: 'top_associations')
   final List<Association>? topAssociations;
+  @JsonKey(name: 'significant_associations')
   final List<Association>? significantAssociations;
 
   Details(

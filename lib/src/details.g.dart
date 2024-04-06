@@ -10,17 +10,17 @@ Details _$DetailsFromJson(Map<String, dynamic> json) => Details(
       attributes:
           Attributes.fromJson(json['attributes'] as Map<String, dynamic>),
       metadata: json['metadata'] as Map<String, dynamic>?,
-      extendedMetadata: (json['extendedMetadata'] as List<dynamic>?)
+      extendedMetadata: (json['extended_metadata'] as List<dynamic>?)
           ?.map((e) => Attributes.fromJson(e as Map<String, dynamic>))
           .toList(),
-      lastAssociations: (json['lastAssociations'] as List<dynamic>?)
+      lastAssociations: (json['last_associations'] as List<dynamic>?)
           ?.map((e) => Association.fromJson(e as Map<String, dynamic>))
           .toList(),
-      topAssociations: (json['topAssociations'] as List<dynamic>?)
+      topAssociations: (json['top_associations'] as List<dynamic>?)
           ?.map((e) => Association.fromJson(e as Map<String, dynamic>))
           .toList(),
       significantAssociations:
-          (json['significantAssociations'] as List<dynamic>?)
+          (json['significant_associations'] as List<dynamic>?)
               ?.map((e) => Association.fromJson(e as Map<String, dynamic>))
               .toList(),
     );
@@ -28,10 +28,10 @@ Details _$DetailsFromJson(Map<String, dynamic> json) => Details(
 Map<String, dynamic> _$DetailsToJson(Details instance) => <String, dynamic>{
       'attributes': instance.attributes,
       'metadata': instance.metadata,
-      'extendedMetadata': instance.extendedMetadata,
-      'lastAssociations': instance.lastAssociations,
-      'topAssociations': instance.topAssociations,
-      'significantAssociations': instance.significantAssociations,
+      'extended_metadata': instance.extendedMetadata,
+      'last_associations': instance.lastAssociations,
+      'top_associations': instance.topAssociations,
+      'significant_associations': instance.significantAssociations,
     };
 
 Attributes _$AttributesFromJson(Map<String, dynamic> json) => Attributes(
