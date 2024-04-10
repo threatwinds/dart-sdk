@@ -9,7 +9,7 @@ void main() {
       final req = Request(
         method: "GET",
         endpoint:
-            "/api/analytics/v1/entity/ip-ba7fa36bff8d58ee45b973615e83d9aaeb921f1cc477d9c156e8a9cae8cca16e/details",
+            "/api/analytics/v1/entity/ip-ef7e584b1e7de2bb6d3ae54d43dff6b98ba4f98c835cb2fcdbea0ccb2896c744/details",
       );
 
       final resp = req.doReq(cli: client);

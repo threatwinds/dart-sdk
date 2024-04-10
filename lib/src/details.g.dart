@@ -13,25 +13,20 @@ Details _$DetailsFromJson(Map<String, dynamic> json) => Details(
       extendedMetadata: (json['extended_metadata'] as List<dynamic>?)
           ?.map((e) => Attributes.fromJson(e as Map<String, dynamic>))
           .toList(),
-      lastAssociations: (json['last_associations'] as List<dynamic>?)
+      latestAssociations: (json['latest_associations'] as List<dynamic>?)
           ?.map((e) => Association.fromJson(e as Map<String, dynamic>))
           .toList(),
-      topAssociations: (json['top_associations'] as List<dynamic>?)
-          ?.map((e) => Association.fromJson(e as Map<String, dynamic>))
+      geolocations: (json['geolocations'] as List<dynamic>?)
+          ?.map((e) => Geolocation.fromJson(e as Map<String, dynamic>))
           .toList(),
-      significantAssociations:
-          (json['significant_associations'] as List<dynamic>?)
-              ?.map((e) => Association.fromJson(e as Map<String, dynamic>))
-              .toList(),
     );
 
 Map<String, dynamic> _$DetailsToJson(Details instance) => <String, dynamic>{
       'attributes': instance.attributes,
       'metadata': instance.metadata,
       'extended_metadata': instance.extendedMetadata,
-      'last_associations': instance.lastAssociations,
-      'top_associations': instance.topAssociations,
-      'significant_associations': instance.significantAssociations,
+      'latest_associations': instance.latestAssociations,
+      'geolocations': instance.geolocations,
     };
 
 Attributes _$AttributesFromJson(Map<String, dynamic> json) => Attributes(
@@ -116,4 +111,27 @@ Map<String, dynamic> _$AssociationToJson(Association instance) =>
       'bgCount': instance.bgCount,
       'count': instance.count,
       'significanceScore': instance.significanceScore,
+    };
+
+Geolocation _$GeolocationFromJson(Map<String, dynamic> json) => Geolocation(
+      object: json['object'] as String,
+      country: json['country'] as String,
+      city: json['city'] as String,
+      aso: json['aso'] as String,
+      asn: (json['asn'] as num).toDouble(),
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
+      accuracyRadius: json['accuracy_radius'] as int,
+    );
+
+Map<String, dynamic> _$GeolocationToJson(Geolocation instance) =>
+    <String, dynamic>{
+      'object': instance.object,
+      'country': instance.country,
+      'city': instance.city,
+      'aso': instance.aso,
+      'asn': instance.asn,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
+      'accuracy_radius': instance.accuracyRadius,
     };

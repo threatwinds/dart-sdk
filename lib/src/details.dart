@@ -9,20 +9,17 @@ class Details {
   final Map<String, dynamic>? metadata;
   @JsonKey(name: 'extended_metadata')
   final List<Attributes>? extendedMetadata;
-  @JsonKey(name: 'last_associations')
-  final List<Association>? lastAssociations;
-  @JsonKey(name: 'top_associations')
-  final List<Association>? topAssociations;
-  @JsonKey(name: 'significant_associations')
-  final List<Association>? significantAssociations;
+  @JsonKey(name: 'latest_associations')
+  final List<Association>? latestAssociations;
+  final List<Geolocation>? geolocations;
 
-  Details(
-      {required this.attributes,
-      this.metadata,
-      this.extendedMetadata,
-      this.lastAssociations,
-      this.topAssociations,
-      this.significantAssociations});
+  Details({
+    required this.attributes,
+    this.metadata,
+    this.extendedMetadata,
+    this.latestAssociations,
+    this.geolocations
+  });
 
   factory Details.fromJson(Map<String, dynamic> json) =>
       _$DetailsFromJson(json);
@@ -137,4 +134,33 @@ class Association {
       _$AssociationFromJson(json);
 
   Map<String, dynamic> toJson() => _$AssociationToJson(this);
+}
+
+@JsonSerializable()
+class Geolocation {
+  final String object;
+  final String country;
+  final String city;
+  final String aso;
+  final double asn;
+  final double latitude;
+  final double longitude;
+  @JsonKey(name: 'accuracy_radius')
+  final int accuracyRadius;
+
+  Geolocation({
+    required this.object,
+    required this.country,
+    required this.city,
+    required this.aso,
+    required this.asn,
+    required this.latitude,
+    required this.longitude,
+    required this.accuracyRadius
+  });
+
+  factory Geolocation.fromJson(Map<String, dynamic> json) =>
+      _$GeolocationFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GeolocationToJson(this);
 }
